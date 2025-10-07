@@ -44,7 +44,7 @@ end
 ```
 
 ## Player
-```
+```lua
 -- Valid platforms:
 -- "steam", "rift", "quest"
 print(Player.Platform)
@@ -57,4 +57,29 @@ print("your ID is " .. Player.PlayerId)
 if Player.PlayerId == "123456789" then
     print("OMG its lemming")
 end
+```
+
+## Input
+We provide a basic input class with about any value you would need.
+```lua
+-- Boolean values: primary, secondary
+local lPrim = Input.LeftPrimary
+local rScnd = Input.RightSecondary
+
+print(lPrim and rScnd)
+
+-- Number values for trigger and grip.
+-- Both are on a scale of 0 to 1.
+
+print(Input.LeftTrigger > 0.25) -- holding 25% of the way in
+
+-- [*]ThumbstickAxis is more interesting, as they use Vector2 instead.
+-- Vector2 gives you an X and Y value. They support math operations and tostring(), 
+-- so they should work in most cases.
+local LeftXAxisWest = Input.LeftThumbstickAxis.X > 0.5
+local LeftXAxisEast = Input.LeftThumbstickAxis.X < -0.5
+local LeftXAxisNorth = Input.LeftThumbstickAxis.Y > 0.5
+local LeftXAxisSouth = Input.LeftThumbstickAxis.Y < -0.5
+
+print(tostring(Input.LeftThumbstickAxis)) -- Would return " X: *, Y: *".
 ```

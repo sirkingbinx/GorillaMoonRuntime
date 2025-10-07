@@ -3,6 +3,7 @@ using System;
 using UnityEngine;
 using System.Threading.Tasks;
 using GorillaMoonRuntime.MoonLibraries;
+using GorillaMoonRuntime.MoonLibraries.Types;
 
 namespace GorillaMoonRuntime
 {
@@ -58,6 +59,9 @@ namespace GorillaMoonRuntime
             });
             #endregion
             #region Libraries
+            luaState.Environment["Vector2"] = new LuaVector2();
+            luaState.Environment["Vector3"] = new LuaVector3();
+
             luaState.Environment["Networking"] = new Networking();
             luaState.Environment["Player"] = new Player();
             #endregion
