@@ -2,7 +2,7 @@ using Lua;
 
 namespace GorillaMoonRuntime.MoonLibraries.Types
 {
-    [LuaObject]
+    [LuaObject("Vector2")]
     public partial class LuaVector2
     {
 #region Fields
