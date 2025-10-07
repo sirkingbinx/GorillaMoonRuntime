@@ -16,7 +16,7 @@ namespace BingusDebugger
     {
         public static Plugin instance { get; private set; }
 
-        string ScriptsDirectory = Path.Combine(AssemblyDirectory, "Scripts");
+        string ScriptsDirectory = Path.Combine(AssemblyDirectory, @"BepInEx\plugins\GorillaMoonRuntime\scripts");
 
         public Action scriptsUpdate = delegate { };
         public Action scriptsInit = delegate { };
@@ -35,6 +35,9 @@ namespace BingusDebugger
             GorillaTagger.OnPlayerSpawned(scriptsInit);
 
             Debug.Log("STARTING SCRIPT LOADING");
+
+            foreach (string f in Directory.GetFiles(ScriptsDirectory))
+                LoadScript(f)
         }
 
         public void Update() => scriptsUpdate();

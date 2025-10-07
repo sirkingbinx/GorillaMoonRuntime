@@ -50,6 +50,8 @@ namespace GorillaMoonRuntime
             #region Threading
             luaState.Environment["wait"] = new LuaFunction(async (context, buffer, ct) =>
             {
+                // This is directly from Lua-CSharp's docs
+                // I know I'm so creative
                 var sec = context.GetArgument<double>(0);
                 await Task.Delay(TimeSpan.FromSeconds(sec));
                 return 0;
