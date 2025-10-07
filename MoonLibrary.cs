@@ -4,6 +4,8 @@ using UnityEngine;
 using System.Threading.Tasks;
 using GorillaMoonRuntime.MoonLibraries;
 using GorillaMoonRuntime.MoonLibraries.Types;
+using Microsoft.CodeAnalysis.CSharp.Scripting;
+using Microsoft.CodeAnalysis.Scripting;
 
 namespace GorillaMoonRuntime
 {
@@ -64,6 +66,30 @@ namespace GorillaMoonRuntime
 
             luaState.Environment["Networking"] = new Networking();
             luaState.Environment["Player"] = new Player();
+            #endregion
+            #region Exporting
+            luaState.Environment["__csrun"] = new LuaFunction(async (context, buffer, ct) =>
+            {
+                var code = context.GetArgument<string>(0);
+                try
+                {
+                    int result = await CSharpScript.EvaluateAsync<int>(codeToExecute);
+                }
+                catch (CompilationErrorException ex)
+                {
+                    Console.WriteLine("compiler errors:");
+                    foreach (var diagnostic in ex.Diagnostics)
+                    {
+                        Console.WriteLine(diagnostic);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"runtime err: {ex.Message}");
+                }
+                
+                return 0;
+            });
             #endregion
         }
     }

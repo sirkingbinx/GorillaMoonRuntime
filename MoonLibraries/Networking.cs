@@ -8,9 +8,9 @@ namespace GorillaMoonRuntime.MoonLibraries
     public partial class Networking
     {
         [LuaMember("IsConnected")]
-        public static bool IsConnectedToRoom
+        public static bool IsConnected
         {
-            get => PhotonNetwork.InLobby;
+            get => PhotonNetwork.InRoom;
         }
 
         [LuaMember("RoomCode")]
@@ -22,7 +22,7 @@ namespace GorillaMoonRuntime.MoonLibraries
         [LuaMember("PlayerCount")]
         public static int PlayerCount
         {
-            get => IsConnectedToRoom ? PhotonNetwork.CurrentRoom.PlayerCount : -1;
+            get => IsConnected ? PhotonNetwork.CurrentRoom.PlayerCount : -1;
         }
 
         [LuaMember("IsModded")]
@@ -31,11 +31,17 @@ namespace GorillaMoonRuntime.MoonLibraries
             get => NetworkSystem.Instance.GameModeString.Contains("MODDED_");
         }
 
+        [LuaMember("Gamemode")]
+        public static string Gamemode
+        {
+            get => NetworkSystem.Instance.GameModeString;
+        }
+
         [LuaMember("TryConnectToRoom")]
         public static void TryConnectToRoom(string roomCode, string gamemode)
         {
-            if (IsConnectedToRoom)
-                PhotonNetwork.Disconnect();
+            if (IsConnected)
+                NetworkSystem.Instance.ReturnToSinglePlayer();
 
             GorillaComputer.instance.SetGameModeWithoutButton(gamemode);
             PhotonNetworkController.Instance.AttemptToJoinSpecificRoom(roomCode, JoinType.Solo);
@@ -44,11 +50,14 @@ namespace GorillaMoonRuntime.MoonLibraries
         [LuaMember("TryConnectToPublic")]
         public static void TryConnectToPublic(string gamemode)
         {
-            if (IsConnectedToRoom)
-                PhotonNetwork.Disconnect();
+            if (IsConnected)
+                NetworkSystem.Instance.ReturnToSinglePlayer();
 
             GorillaComputer.instance.SetGameModeWithoutButton(gamemode);
             PhotonNetworkController.Instance.AttemptToJoinPublicRoom(PhotonNetworkController.Instance.currentJoinTrigger, JoinType.Solo);
         }
+
+        [LuaMember("Disconnect")]
+        public static void Disconnect() => NetworkSystem.Instance.ReturnToSinglePlayer();
     }
 }
