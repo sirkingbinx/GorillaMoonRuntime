@@ -4,11 +4,11 @@ This is a small overview of everything provided by GorillaMoonRuntime. Code exam
 ## Mod Initialization
 You can start writing mods just like any other Lua script. GorillaMoonRuntime will call `init()` when the game finishes loading and `step()` every frame.
 ```lua
-function init()
+function Init()
     print("the game has loaded")
 end
 
-function step()
+function Step()
     print("this is called every frame")
 end
 ```

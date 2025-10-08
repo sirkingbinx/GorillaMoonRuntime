@@ -11,12 +11,12 @@ using UnityEngine;
 
 namespace BingusDebugger
 {
-    [BepInPlugin("bingus.gorillamoonruntime", "GorillaMoonRuntime", "1.0.0")]
+    [BepInPlugin("bingus.moonmonke", "MoonMonke", "1.0.0")]
     public class Plugin : BaseUnityPlugin
     {
         public static Plugin instance { get; private set; }
 
-        string ScriptsDirectory = Path.Combine(AssemblyDirectory, @"BepInEx\plugins\GorillaMoonRuntime\scripts");
+        string ScriptsDirectory = Path.Combine(AssemblyDirectory, @"BepInEx\plugins\MoonMonke\scripts");
 
         public Action scriptsUpdate = delegate { };
         public Action scriptsInit = delegate { };
@@ -25,7 +25,7 @@ namespace BingusDebugger
 
         public void Start()
         {
-            Debug.Log("Initiailizing GorillaMoonRuntime");
+            Debug.Log("Initiailizing MoonMonke");
 
             instance = this;
 
@@ -59,13 +59,13 @@ namespace BingusDebugger
                 else
                     Debug.Log($"Successfully loaded script: {file}");
 
-                if (thisLuaState.Environment["init"] != LuaValue.Nil && thisLuaState.Environment["init"].Type == LuaValueType.Function)
+                if (thisLuaState.Environment["Init"] != LuaValue.Nil && thisLuaState.Environment["Init"].Type == LuaValueType.Function)
                 {
                     Debug.Log("found init");
                     // soon
                 }
 
-                if (thisLuaState.Environment["step"] != LuaValue.Nil && thisLuaState.Environment["step"].Type == LuaValueType.Function)
+                if (thisLuaState.Environment["Step"] != LuaValue.Nil && thisLuaState.Environment["Step"].Type == LuaValueType.Function)
                 {
                     Debug.Log("found step");
                     // soon
